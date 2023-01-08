@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from schemas import User
 import re
+from db import get_user, add_user, get_user_by_data
 import json
 
 
@@ -25,7 +26,7 @@ def validate(login: str, email: str, phone: str):
     result = re.split("@", email)
     if result[0] == '' or result[1] == '':
         result.remove('')
-    if not len(result) == 2:
+    if (not len(result) == 2) or result[0][0] == '.':
         error += "Incorrect email. "
         res = False
 
@@ -51,11 +52,14 @@ async def root():
 async def check(user: User):
     val, er = validate(user.login, user.email, user.phone)
     if val:
-        return user
+        add_user(user.login, user.email, user.phone)
+        user_id = get_user_by_data(user.login, user.email, user.phone)
+        return {'id': user_id}
     else:
         return er
 
 
 @app.get("/users/{user_id}")
 async def users(user_id: int):
-    return "id: 1, login: vasya228, email: vasily_vasya@mail.ru, phone: +79991234567"
+    user = get_user(user_id)
+    return user
