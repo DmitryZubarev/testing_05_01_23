@@ -2,11 +2,13 @@ from pydantic import BaseModel, validator
 import re
 
 
+"""This class will be used to validate incoming json files on post request with path '/check ' """
 class User(BaseModel):
     email: str
     login: str
     phone: str
 
+    # validation of email
     @validator('email')
     def check_email(cls, v):
         result = re.split("@", v)
@@ -16,6 +18,7 @@ class User(BaseModel):
             raise ValueError('Email must be must be in the form user@domain')
         return v
 
+    # validation of login
     @validator('login')
     def check_login(cls, v):
         if 3 <= len(v) <= 20:
@@ -26,6 +29,7 @@ class User(BaseModel):
             raise ValueError('The login must include only the characters a-z 0-9 and .')
         return v
 
+    # validation of phone number
     @validator('phone')
     def check_phone(cls, v):
         if len(v) == 12 and v[0:3] == "+79":

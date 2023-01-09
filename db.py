@@ -2,6 +2,9 @@ import psycopg2
 from config import *
 
 
+"""The method returns the maximum ID from the database.
+   The method is needed due to the fact
+   that auto-increment is not configured in the database"""
 def get_row_number():
     try:
         connection = psycopg2.connect(
@@ -28,6 +31,8 @@ def get_row_number():
         connection.close()
 
 
+"""The method receives 3 fields as input: login, email and phone number,
+   after which it adds a new record with these parameters to the database"""
 def add_user(login: str, email: str, phone: str):
     try:
         connection = psycopg2.connect(
@@ -53,6 +58,8 @@ def add_user(login: str, email: str, phone: str):
         connection.close()
 
 
+"""The method receives user ID and returns all data of the row with 
+   appropriate ID"""
 def get_user(user_id):
     try:
         connection = psycopg2.connect(
@@ -86,6 +93,9 @@ def get_user(user_id):
         connection.close()
 
 
+"""The method receives user's login, email and phone number,
+   finds the first row in database with these parameters
+   and return ID from a found row"""
 def get_user_by_data(login: str, email: str, phone: str):
     try:
         connection = psycopg2.connect(
@@ -111,6 +121,3 @@ def get_user_by_data(login: str, email: str, phone: str):
 
     finally:
         connection.close()
-
-
-print(get_row_number())

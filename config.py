@@ -1,3 +1,6 @@
+"""This file contains data
+   for connecting to the database"""
+
 host = "localhost"
 user_name = "postgres"
 password = "Dc028ed7_"
