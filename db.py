@@ -17,7 +17,7 @@ def get_row_number():
         with connection.cursor() as cursor:
             cursor.execute(
                 f"""SELECT max(id)
-                FROM public.user"""
+                FROM {table_name}"""
             )
 
             count = cursor.fetchone()[0]
@@ -46,7 +46,7 @@ def add_user(login: str, email: str, phone: str):
 
         with connection.cursor() as cursor:
             cursor.execute(
-                f"""INSERT INTO public.user (id, login, email, phone)
+                f"""INSERT INTO {table_name} (id, login, email, phone)
                 VALUES ('{ident}', '{login}', '{email}', '{phone}')
                 """
             )
@@ -72,7 +72,7 @@ def get_user(user_id):
         with connection.cursor() as cursor:
             cursor.execute(
                 f"""SELECT id, login, email, phone
-                FROM public.user
+                FROM {table_name}
                 WHERE id = {user_id}"""
             )
 
@@ -108,7 +108,7 @@ def get_user_by_data(login: str, email: str, phone: str):
         with connection.cursor() as cursor:
             cursor.execute(
                 f"""SELECT id
-                FROM public.user
+                FROM {table_name}
                 WHERE (login = '{login}' AND email = '{email}' AND phone = '{phone}')"""
             )
 
