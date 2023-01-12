@@ -16,11 +16,13 @@ def get_row_number():
 
         with connection.cursor() as cursor:
             cursor.execute(
-                f"""SELECT max(id)
+                f"""SELECT max(id), count(id)
                 FROM {table_name}"""
             )
 
-            count = cursor.fetchone()[0]
+            count = 0
+            if not (cursor.fetchone()[1] == 0):
+                count = cursor.fetchone()[0]
 
             return int(count)
 
