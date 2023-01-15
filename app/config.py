@@ -1,4 +1,4 @@
 postgres_user = 'postgres'
 postgres_password = 'postgres'
 host = 'localhost'
-db_name = 'Zubarev_Dmitry'
+db_name = 'zubarev_dmitry'

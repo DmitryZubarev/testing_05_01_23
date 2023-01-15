@@ -1,21 +1,11 @@
-from fastapi import Depends, FastAPI
-from sqlalchemy.orm import Session
+from fastapi import FastAPI
 
 import db_methods, models, schemas
-from database import SessionLocal, engine
+from database import engine
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 """This method receives a json file with 3 fields: login, email and phone number.
@@ -31,4 +21,6 @@ async def check(user: schemas.User):
 @app.get("/users/{user_id}")
 async def users(user_id: int):
     user = db_methods.get_user_by_id(user_id)
+    if user is None:
+        return None
     return {'id': user.id, 'login': user.login, 'email': user.email, 'phone': user.phone}
