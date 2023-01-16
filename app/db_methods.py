@@ -7,6 +7,8 @@ import models
 models.Base.metadata.create_all(bind=engine)
 
 
+"""This method receives an ID of user, that we want to find
+   and return all data of found user in the form of models.User class"""
 def get_user_by_id(user_id: int):
     db = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     session = db()
@@ -14,6 +16,10 @@ def get_user_by_id(user_id: int):
     return user
 
 
+"""This method receives login, email and phone of user,
+   create new models.User object with this data and put 
+   this object into database. 
+   After all, this method returns an ID of new user"""
 def add_user(user: schemas.User):
     db = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     session = db()

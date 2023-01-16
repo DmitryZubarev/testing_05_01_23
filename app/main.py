@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import uvicorn
 
 import db_methods, models, schemas
 from database import engine
@@ -24,3 +25,8 @@ async def users(user_id: int):
     if user is None:
         return None
     return {'id': user.id, 'login': user.login, 'email': user.email, 'phone': user.phone}
+
+
+if __name__ == "mane":
+    uvicorn.run("main:app", host="localhost", port=30)
+    print("YOU NEED TO GO -> http://localhost:30/")
