@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: .
+    container_name: validation_service
+    volumes:
+      - ./app:/app
+    ports:
+      - "30:80"
